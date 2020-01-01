@@ -1,0 +1,37 @@
+defmodule Usenex.Nntp.Command.XoverTest do
+  use ExUnit.Case
+
+  alias Usenex.Nntp.Command.Xover
+
+  x = """
+  "74563304\tyEXmiWcQAZne87ocoOpU1ijuDQa.vol0+2.par2 (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tTue, 31 Dec 2019 15:50:14 +0100\t<nnd$1147145f$02a4db96@dce28c0286f03df3>\t\t7923\t60\tXref: news.easynews.com alt.binaries:74563304 alt.binaries.ftwclub:64582529 alt.binaries.xpd:1523548\r\n74563305\tyEXmiWcQAZne87ocoOpU1ijuDQa.rar (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tTue, 31 Dec 2019 15:50:14 +0100\t<nnd$0c0c1225$0be794e8@dad2afbabc7c290e>\t\t62816\t482\tXref: news.easynews.com alt.binaries:74563305 alt.binaries.ftwclub:64582530 alt.binaries.xpd:1523549\r\n74563306\tYBbfZOMUIYkMWiG9ms6DRYraXtB.rar (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tTue, 31 Dec 2019 15:50:14 +0100\t<nnd$38c5362c$241f7c39@dce28c0286f03df3>\t\t89989\t691\tXref: news.easynews.com alt.binaries:74563306 alt.binaries.ftwclub:64582531 alt.binaries.xpd:1523550\r\n74563307\t9o5TjmzxL4U5zrjGHeuJFuP2iPx.vol0+2.par2 (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tTue, 31 Dec 2019 15:50:14 +0100\t<nnd$2058b5f0$13b51a1a@dce28c0286f03df3>\t\t8275\t62\tXref: news.easynews.com alt.binaries:74563307 alt.binaries.ftwclub:64582532 alt.binaries.xpd:1523551\r\n74563308\tYBbfZOMUIYkMWiG9ms6DRYraXtB.vol0+3.par2 (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tTue, 31 Dec 2019 15:50:14 +0100\t<nnd$48a073f8$2a019312@3bcb46c0d315563c>\t\t11968\t91\tXref: news.easynews.com alt.binaries:74563308 alt.binaries.ftwclub:64582533 alt.binaries.xpd:1523552\r\n74563309\tyEXmiWcQAZne87ocoOpU1ijuDQa.par2 (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tTue, 31 Dec "
+  "2019 15:50:14 +0100\t<nnd$03eb21af$59ecae86@7fb1b38096f9de06>\t\t1760\t12\tXref: news.easynews.com alt.binaries:74563309 alt.binaries.ftwclub:64582534 alt.binaries.xpd:1523553\r\n74563310\tpFMOfhur7bLTrsy517LcoFG6DMc.vol0+2.par2 (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tTue, 31 Dec 2019 15:50:14 +0100\t<nnd$7634a3a7$6e9c6656@3bcb46c0d315563c>\t\t8334\t62\tXref: news.easynews.com alt.binaries:74563310 alt.binaries.ftwclub:64582535 alt.binaries.xpd:1523554\r\n74563311\tYBbfZOMUIYkMWiG9ms6DRYraXtB.par2 (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tTue, 31 Dec 2019 15:50:14 +0100\t<nnd$2a4ea4e2$0b84b9f7@3bcb46c0d315563c>\t\t1848\t13\tXref: news.easynews.com alt.binaries:74563311 alt.binaries.ftwclub:64582536 alt.binaries.xpd:1523555\r\n74563312\t9o5TjmzxL4U5zrjGHeuJFuP2iPx.par2 (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tTue, 31 Dec 2019 15:50:14 +0100\t<nnd$6ed565b5$032f8ed5@dce28c0286f03df3>\t\t1977\t13\tXref: news.easynews.com alt.binaries:74563312 alt.binaries.ftwclub:64582537 alt.binaries.xpd:1523556\r\n74563313\t7t4llIeUmGa3SIF5RyTSqeITgdz.rar (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tTue, 31 Dec 2019 15:50:14 +0100\t<nnd$48c0d214$42ce3fb0@7fb1b38096f9de06>\t\t118734\t912\tXref: news.easynews.com alt.binaries:74563313 alt.binaries.ftwclub:64582538 alt.binaries.xpd:1523557\r\n74563314\tf6w0CoXvu3ZyhUIlXTHEr98xFMH.rar (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tTue, 31 Dec 2019 15:50:14 +0100\t<nnd$6a63b21a$13677263@dad2afbabc7c290e>\t\t102587\t787\tXref: news.easynews.com alt.binaries:"
+  """
+
+  test "join messages" do
+    messages = """
+    "74563277\t(????) [0205/1000] - \"cracked12Ghosts Pro   21.50f.exe\" yEnc (5/7)\tYenc@power-post.org (Yenc-PP-A&A)\tFri, 08 Nov 2019 10:17:56 GMT\t<ohbxF.72885$GwW.42642@fx08.am4>\t\t256993\t1974\tXref: news.easynews.com alt.binaries:74563277 alt.binaries.e-books:5527399 alt.binaries.games:1801091449 alt.binaries.music:172526751 alt.binaries.sounds:204955258 alt.binaries.test:3435459720 alt.binaries.warez:3551515593\r\n74563278\tv5apF9JEsePKJ9StqpXvekgJU4I.rar (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tSun, 29 Dec 2019 13:42:40 +0100\t<nnd$08e5dfa1$69936552@6920298837510808>\t\t157160\t1207\tXref: news.easynews.com alt.binaries:74563278 alt.binaries.ftwclub:63907873 alt.binaries.xpd:1523522\r\n74563279\t9BJ5rwnCCqhYPKAanROXSFKAeH1.rar (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tSun, 29 Dec 2019 13:42:40 +0100\t<nnd$24383896$01491ef7@01c5e398a4af5ceb>\t\t94508\t726\tXref: news.easynews.com alt.binaries:74563279 alt.binaries.ftwclub:63907874 alt.binaries.xpd:1523523\r\n74563280\tzb1AnIYNKxF5IooRaHLDv22VQ9y.vol0+3.par2 (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tSun, 29 Dec 2019 13:42:40 +0100\t<nnd$67f3de86$0e54d880@df9b4e384887aa75>\t\t12990\t98\tXref: news.easynews.com alt.binaries:74563280 alt.binaries.ftwclub:63907875 alt.binaries.xpd:1523524\r\n74563281\tzb1AnIYNKxF5IooRaHLDv22VQ9y.par2 (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tSun, 29 Dec 2019 13:42:40 +0100\t<nnd$304f8ad4$644f3d40@7b21d0f8a50ce37e>\t\t1950\t14\tXref: news.easynews.com alt.binaries:74563281 alt.binaries.ftwclub:63907876 "
+    "alt.binaries.xpd:1523525\r\n74563282\t9BJ5rwnCCqhYPKAanROXSFKAeH1.par2 (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tSun, 29 Dec 2019 13:42:40 +0100\t<nnd$2c3edb1c$2023bdf3@6920298837510808>\t\t1896\t13\tXref: news.easynews.com alt.binaries:74563282 alt.binaries.ftwclub:63907877 alt.binaries.xpd:1523526\r\n74563283\tv5apF9JEsePKJ9StqpXvekgJU4I.vol0+3.par2 (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tSun, 29 Dec 2019 13:42:40 +0100\t<nnd$602ee28a$517ba99b@df9b4e384887aa75>\t\t15445\t117\tXref: news.easynews.com alt.binaries:74563283 alt.binaries.ftwclub:63907878 alt.binaries.xpd:1523527\r\n74563284\t9BJ5rwnCCqhYPKAanROXSFKAeH1.vol0+2.par2 (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tSun, 29 Dec 2019 13:42:40 +0100\t<nnd$0ae3a1b6$3757ac38@7b21d0f8a50ce37e>\t\t9446\t71\tXref: news.easynews.com alt.binaries:74563284 alt.binaries.ftwclub:63907879 alt.binaries.xpd:1523528\r\n74563285\tv5apF9JEsePKJ9StqpXvekgJU4I.par2 (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tSun, 29 Dec 2019 13:42:40 +0100\t<nnd$4b983a39$1124de25@df9b4e384887aa75>\t\t2089\t15\tXref: news.easynews.com alt.binaries:74563285 alt.binaries.ftwclub:63907880 alt.binaries.xpd:1523529\r\n74563286\tzb1AnIYNKxF5IooRaHLDv22VQ9y.rar (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tSun, 29 Dec 2019 13:42:40 +0100\t<nnd$507fdee1$1f187e50@01c5e398a4af5ceb>\t\t105521\t810\tXref: news.easynews.com alt.binaries:74563286 alt.binaries.ftwclub:63907881 alt.binaries.xpd:1523530\r\n74563287\tQBidfEHCL5PWo6NTgX3MC4yuFWP.vol0+3.par2 (1/1)\tYenc@power-post.org (Yenc-PP-A&"
+    "A)\tSun, 29 Dec 2019 16:30:27 +0100\t<nnd$6aaa475d$2963e9b9@9959c3bc60ecc53f>\t\t12324\t93\tXref: news.easynews.com alt.binaries:74563287 alt.binaries.ftwclub:63933997 alt.binaries.xpd:1523531\r\n74563288\tQBidfEHCL5PWo6NTgX3MC4yuFWP.par2 (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tSun, 29 Dec 2019 16:30:27 +0100\t<nnd$2a03a126$64c2f723@11d21ee8ed25ddaf>\t\t1890\t14\tXref: news.easynews.com alt.binaries:74563288 alt.binaries.ftwclub:63933998 alt.binaries.xpd:1523532\r\n74563289\tQBidfEHCL5PWo6NTgX3MC4yuFWP.rar (1/1)\tYenc@power-post.org (Yenc-PP-A&A)\tSun, 29 Dec 2019 16:30:27 +0100\t<nnd$384eb03f$03ac4dd3@2ce6d50876577010>\t\t95110\t730\tXref: news.easynews.com alt.binaries:74563289 alt.binaries.ftwclub:63933999 alt.binaries.xpd:1523533\r\n.\r\n"
+    """
+
+    {:halt, messages} = Xover.join_messages({:ok, messages}, [])
+    message_ids = Map.keys(messages)
+
+    assert message_ids == [
+             "74563277",
+             "74563278",
+             "74563279",
+             "74563280",
+             "74563281",
+             "74563282",
+             "74563283",
+             "74563284",
+             "74563285",
+             "74563286",
+             "74563287",
+             "74563288",
+             "74563289"
+           ]
+  end
+end
